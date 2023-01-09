@@ -1,0 +1,38 @@
+--Select
+select * from customers;
+select contact_name Adi, company_name Şirket_Adı, city Şehir from customers;
+select * from customers where city='Berlin';
+
+--case insensitive for commands
+select * from Products where category_id=1 or category_id=3 order by category_id desc;
+select * from Products where category_id=1 and unit_price>=10 order by unit_price desc;
+select * from products order by category_id, product_name;
+
+select count(*) from products;
+select count(*) Adet from products where category_id=1;
+
+select category_id, count(*) Adet from products group by category_id;
+select category_id,count(*) Adet from products group by category_id having count(*)<10;
+
+select * from products inner join categories on products.category_id=categories.category_id;
+
+--inner join sadece eşleşen dataları getirir.
+select products.product_id,products.product_name,products.unit_price,categories.category_name 
+from products inner join categories 
+on products.category_id=categories.category_id
+where products.unit_price>10
+order by unit_price desc;
+
+--left join
+select * from products p left join order_details od
+on p.product_id=od.product_id;
+
+--left join, solda olup sağda olmayanlar, bu örnek için müşteri tablosunda olup sipariş tabloasunda olamayanları da
+--yan hiç sipariş vermemiş müşteriler
+select * from customers c left join orders o
+on c.customer_id=o.customer_id;
+
+--müşteri kaydı yapıp hiç sipariş vermemiş olanlar
+select * from customers c left join orders o
+on c.customer_id=o.customer_id
+where o.customer_id is null;
